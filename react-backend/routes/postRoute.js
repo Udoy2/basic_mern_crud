@@ -7,7 +7,7 @@ post_route.use(bodyParser.urlencoded({extended:true}));
 
 const multer = require('multer');
 const path = require('path');
-const { createPost } = require("../controllers/postController");
+const { createPost, getPosts, deletePost } = require("../controllers/postController");
 post_route.use(express.static('public'));
 
 
@@ -25,5 +25,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage: storage});
 
 post_route.post("/create-post",upload.single('image'),createPost)
+post_route.get("/get-posts",getPosts)
+post_route.get("/delete-post/:id",deletePost)
 
 module.exports = post_route

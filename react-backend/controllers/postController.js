@@ -24,6 +24,39 @@ const createPost = async(req,res)=>{
     }
 }
 
+const getPosts = async(req,res)=>{
+    try {
+        const posts = await postModel.find({});
+        res.status(200).send({
+            success: true,
+            msg: "Posts data",
+            data: posts
+        })
+    } catch (error) {
+        res.status(400).send({
+            success: false,
+            msg: error.message
+        });
+    }
+}
+const deletePost = async(req,res)=>{
+    try {
+        const id = req.params.id
+        await postModel.deleteOne({_id:id});
+        res.status(200).send({
+            success: true,
+            msg: "Posts Deleted",
+        })
+    } catch (error) {
+        res.status(400).send({
+            success: false,
+            msg: error.message
+        });
+    }
+}
+
 module.exports = {
-    createPost
+    createPost,
+    getPosts,
+    deletePost
 }
